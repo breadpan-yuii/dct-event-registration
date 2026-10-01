@@ -1,0 +1,29 @@
+{
+  "name": "dct-event-registration",
+  "version": "1.0.0",
+  "description": "Event Registration System themed for Dominican College of Tarlac (dct.edu.ph) — Node.js + Express + EJS in a clean MVC architecture.",
+  "main": "server.js",
+  "type": "commonjs",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "node --watch server.js",
+    "seed": "node models/seed.js",
+    "reset": "node models/seed.js --force"
+  },
+  "keywords": [
+    "dct",
+    "dominican-college-of-tarlac",
+    "event-registration",
+    "mvc",
+    "express",
+    "ejs"
+  ],
+  "license": "MIT",
+  "engines": {
+    "node": ">=18"
+  },
+  "dependencies": {
+    "ejs": "^3.1.10",
+    "express": "^4.21.2"
+  }
+}

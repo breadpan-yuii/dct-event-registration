@@ -1,0 +1,63 @@
+<section class="page-intro">
+  <div class="container">
+    <p class="crumbs"><a href="/">Home</a> / <a href="/events">Events</a> / <%= event.title %></p>
+    <h1><%= event.title %></h1>
+  </div>
+</section>
+
+<section class="section">
+  <div class="container detail-grid">
+
+    <!-- Main -->
+    <div class="card detail-main">
+      <dl class="meta-list">
+        <div class="meta-item"><dt>Date</dt><dd><%= fmtLongDate(event.date) %></dd></div>
+        <div class="meta-item"><dt>Time</dt><dd><%= fmtTime(event.timeStart) %> &ndash; <%= fmtTime(event.timeEnd) %></dd></div>
+        <div class="meta-item"><dt>Venue</dt><dd><%= event.venue %></dd></div>
+        <div class="meta-item"><dt>Organizer</dt><dd><%= event.organizer %></dd></div>
+        <div class="meta-item"><dt>Contact</dt><dd><a href="mailto:<%= event.contactEmail %>"><%= event.contactEmail %></a></dd></div>
+      </dl>
+
+      <div class="detail-desc">
+        <h3>About this event</h3>
+        <p><%= event.description %></p>
+      </div>
+
+      <p class="event-code-label">Event code: <code><%= event.code %></code></p>
+    </div>
+
+    <!-- Side panel -->
+    <aside class="detail-side">
+      <div class="card seat-card">
+        <h3>Seat availability</h3>
+        <div class="progress progress-lg">
+          <div class="progress-fill" style="width: <%= event.fill %>%"></div>
+        </div>
+        <p class="seats-legend">
+          <strong><%= event.registrations %></strong> registered &middot;
+          <strong><%= event.seatsLeft %></strong> of <%= event.capacity %> left
+        </p>
+
+        <% if (event.past) { %>
+          <span class="badge badge-closed">&#10003; Event completed</span>
+        <% } else if (event.open) { %>
+          <span class="badge badge-open">&#9679; Registration open</span>
+          <a class="btn-main btn-lg btn-block" href="/events/<%= event.slug %>/register">Register Now</a>
+        <% } else if (event.seatsLeft === 0) { %>
+          <span class="badge badge-full">&#9679; Event is full</span>
+        <% } else { %>
+          <span class="badge badge-closed">&#9679; Registration closed</span>
+        <% } %>
+
+        <p class="aside-note">One registration per person. You can cancel anytime from your confirmation receipt.</p>
+      </div>
+
+      <div class="card mini-card">
+        <h4>Forgot your reference?</h4>
+        <p>Look up your registration with your email address.</p>
+        <a class="btn-outline btn-block" href="/registrations/lookup">Find my registration</a>
+      </div>
+    </aside>
+
+  </div>
+</section>

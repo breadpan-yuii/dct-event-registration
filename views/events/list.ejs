@@ -1,0 +1,43 @@
+<section class="page-intro">
+  <div class="container">
+    <p class="crumbs"><a href="/">Home</a> / Events</p>
+    <h1>Events &amp; Activities</h1>
+    <p>Everything happening around the <strong><%= school.shortName %></strong> campus.</p>
+  </div>
+</section>
+
+<% if (upcoming.length) { %>
+<section class="section">
+  <div class="container">
+    <div class="section-header">
+      <h2 class="title">Upcoming</h2>
+    </div>
+    <div class="event-grid">
+      <% for (const ev of upcoming) { %>
+        <%- include('/partials/event-card', { event: ev }) %>
+      <% } %>
+    </div>
+  </div>
+</section>
+<% } else { %>
+  <section class="section">
+    <div class="container">
+      <div class="card empty-state"><p>No upcoming events have been published yet.</p></div>
+    </div>
+  </section>
+<% } %>
+
+<% if (past.length) { %>
+<section class="section bg-grey">
+  <div class="container">
+    <div class="section-header">
+      <h2 class="title">Past Events</h2>
+    </div>
+    <div class="event-grid event-grid-muted">
+      <% for (const ev of past) { %>
+        <%- include('/partials/event-card', { event: ev }) %>
+      <% } %>
+    </div>
+  </div>
+</section>
+<% } %>

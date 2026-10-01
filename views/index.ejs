@@ -1,0 +1,86 @@
+<!-- ============ HERO ============ -->
+<section class="hero">
+  <div class="hero-bg" style="background-image: url('/assets/img/hero-bg3.png');"></div>
+  <div class="hero-overlay"></div>
+  <div class="container hero-content">
+    <img class="hero-seal" src="/assets/img/logo-seal.png" alt="Dominican College of Tarlac seal">
+    <h1 class="hero-title"><%= school.name %></h1>
+    <p class="hero-motto"><%= school.motto %> &middot; <em><%= school.mottoEnglish %></em></p>
+    <p class="hero-sub">Register for campus events in one place — Intramurals, Foundation Week, seminars and more.</p>
+    <div class="hero-actions">
+      <a class="btn-main btn-lg" href="/events">Browse Events</a>
+      <a class="btn-outline btn-lg" href="/registrations/lookup">My Registration</a>
+    </div>
+  </div>
+</section>
+
+<!-- ============ UPCOMING EVENTS ============ -->
+<section class="section">
+  <div class="container">
+    <div class="section-header">
+      <h2 class="title">Upcoming Events</h2>
+      <p>Secure your slot for the next <strong><%= school.shortName %></strong> happenings. Registration is free for the DCT community.</p>
+    </div>
+
+    <% if (hasUpcoming) { %>
+      <div class="event-grid">
+        <% for (const ev of upcoming) { %>
+          <%- include('/partials/event-card', { event: ev }) %>
+        <% } %>
+      </div>
+      <div class="center-cta">
+        <a class="btn-outline" href="/events">See all events &rarr;</a>
+      </div>
+    <% } else { %>
+      <div class="card empty-state">
+        <p>No upcoming events right now. Check back soon — or ask your Student Affairs office to publish one!</p>
+        <a class="btn-main" href="/admin">Go to Admin</a>
+      </div>
+    <% } %>
+  </div>
+</section>
+
+<!-- ============ VISION / MISSION ============ -->
+<section class="section bg-grey">
+  <div class="container vision-grid">
+    <div class="card vision-card">
+      <h3><span class="vision-mark">V</span> Vision</h3>
+      <p><%= school.vision %></p>
+    </div>
+    <div class="card vision-card">
+      <h3><span class="vision-mark">M</span> Mission</h3>
+      <p><%= school.mission %></p>
+    </div>
+  </div>
+</section>
+
+<!-- ============ HOW IT WORKS ============ -->
+<section class="section">
+  <div class="container">
+    <div class="section-header">
+      <h2 class="title">How Registration Works</h2>
+    </div>
+    <div class="steps-grid">
+      <div class="step">
+        <span class="step-num">1</span>
+        <h4>Pick an event</h4>
+        <p>Browse the calendar and open the event you want to attend.</p>
+      </div>
+      <div class="step">
+        <span class="step-num">2</span>
+        <h4>Fill the form</h4>
+        <p>Enter your details, department and year level. System validates on-the-fly.</p>
+      </div>
+      <div class="step">
+        <span class="step-num">3</span>
+        <h4>Keep your reference</h4>
+        <p>You instantly get a reference code — use it at the gate or find it again anytime.</p>
+      </div>
+      <div class="step">
+        <span class="step-num">4</span>
+        <h4>Attend &amp; enjoy</h4>
+        <p>Show your reference at the venue. Can't make it? Cancel in one click.</p>
+      </div>
+    </div>
+  </div>
+</section>

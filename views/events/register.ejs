@@ -1,0 +1,121 @@
+<section class="page-intro">
+  <div class="container">
+    <p class="crumbs"><a href="/">Home</a> / <a href="/events">Events</a> / <a href="/events/<%= event.slug %>"><%= event.title %></a> / Register</p>
+    <h1>Event Registration</h1>
+  </div>
+</section>
+
+<section class="section bg-grey">
+  <div class="container register-grid">
+
+    <!-- Form -->
+    <div class="card form-card">
+      <% if (typeof errors !== 'undefined' && Object.keys(errors).length > 0) { %>
+        <div class="flash flash-error">
+          <strong>Please fix the following:</strong>
+          <ul>
+            <% for (const msg of Object.values(errors)) { %>
+              <li><%= msg %></li>
+            <% } %>
+          </ul>
+        </div>
+      <% } %>
+
+      <form method="post" action="/events/<%= event.slug %>/register" id="regForm" data-validate novalidate>
+        <input type="hidden" name="eventId" value="<%= event.id %>">
+
+        <div class="form-row">
+          <div class="field">
+            <label for="fullName">Full name <span class="req">*</span></label>
+            <input type="text" id="fullName" name="fullName" value="<%= typeof form.fullName !== 'undefined' ? form.fullName : '' %>"
+                   placeholder="e.g. Juan Miguel Dela Cruz" data-rule="name" autocomplete="name">
+            <span class="field-error" data-error-for="fullName"><%= errors.fullName || '' %></span>
+          </div>
+        </div>
+
+        <div class="form-row two">
+          <div class="field">
+            <label for="email">Email address <span class="req">*</span></label>
+            <input type="email" id="email" name="email" value="<%= typeof form.email !== 'undefined' ? form.email : '' %>"
+                   placeholder="you@dct.edu.ph" data-rule="email" autocomplete="email">
+            <span class="field-error" data-error-for="email"><%= errors.email || '' %></span>
+          </div>
+          <div class="field">
+            <label for="phone">Mobile number <span class="req">*</span></label>
+            <input type="tel" id="phone" name="phone" value="<%= typeof form.phone !== 'undefined' ? form.phone : '' %>"
+                   placeholder="09XXXXXXXXX" data-rule="phone" autocomplete="tel">
+            <span class="field-error" data-error-for="phone"><%= errors.phone || '' %></span>
+          </div>
+        </div>
+
+        <div class="form-row two">
+          <div class="field">
+            <label for="department">Department <span class="req">*</span></label>
+            <select id="department" name="department" data-rule="required">
+              <option value="">Select department&hellip;</option>
+              <% for (const dept of departments) { %>
+                <option value="<%= dept %>" <%= typeof form.department !== 'undefined' && form.department === dept ? 'selected' : '' %>><%= dept %></option>
+              <% } %>
+            </select>
+            <span class="field-error" data-error-for="department"><%= errors.department || '' %></span>
+          </div>
+          <div class="field">
+            <label for="yearLevel">Year level / status <span class="req">*</span></label>
+            <select id="yearLevel" name="yearLevel" data-rule="required">
+              <option value="">Select&hellip;</option>
+              <% for (const yl of yearLevels) { %>
+                <option value="<%= yl %>" <%= typeof form.yearLevel !== 'undefined' && form.yearLevel === yl ? 'selected' : '' %>><%= yl %></option>
+              <% } %>
+            </select>
+            <span class="field-error" data-error-for="yearLevel"><%= errors.yearLevel || '' %></span>
+          </div>
+        </div>
+
+        <div class="form-row">
+          <div class="field">
+            <label for="studentId">Student / employee ID <span class="optional">(optional)</span></label>
+            <input type="text" id="studentId" name="studentId" value="<%= typeof form.studentId !== 'undefined' ? form.studentId : '' %>"
+                   placeholder="e.g. 2024-1056" autocomplete="off">
+          </div>
+        </div>
+
+        <div class="form-row">
+          <div class="field">
+            <label for="notes">Notes / special requests <span class="optional">(optional)</span></label>
+            <textarea id="notes" name="notes" rows="3" placeholder="Accessibility needs, dietary notes, questions&hellip;"><%= typeof form.notes !== 'undefined' ? form.notes : '' %></textarea>
+          </div>
+        </div>
+
+        <div class="form-actions">
+          <button type="submit" class="btn-main btn-lg">Confirm Registration</button>
+          <a class="btn-outline" href="/events/<%= event.slug %>">Cancel</a>
+        </div>
+      </form>
+    </div>
+
+    <!-- Summary -->
+    <aside>
+      <div class="card mini-card">
+        <h4>You are registering for</h4>
+        <p class="mini-title"><%= event.title %></p>
+        <ul class="mini-list">
+          <li>&#128197; <%= fmtLongDate(event.date) %></li>
+          <li>&#9200; <%= fmtTime(event.timeStart) %> &ndash; <%= fmtTime(event.timeEnd) %></li>
+          <li>&#128205; <%= event.venue %></li>
+        </ul>
+        <div class="progress"><div class="progress-fill" style="width: <%= event.fill %>%"></div></div>
+        <p class="seat-caption"><%= event.seatsLeft %> seats left</p>
+      </div>
+
+      <div class="card mini-card mini-muted">
+        <h4>Good to know</h4>
+        <ul class="mini-list">
+          <li>Registration is free and first-come, first-served.</li>
+          <li>One active registration per person per event.</li>
+          <li>You&rsquo;ll get a reference code you can cancel anytime.</li>
+        </ul>
+      </div>
+    </aside>
+
+  </div>
+</section>

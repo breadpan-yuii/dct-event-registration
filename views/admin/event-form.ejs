@@ -1,0 +1,107 @@
+<section class="page-intro admin-intro">
+  <div class="container">
+    <p class="crumbs"><a href="/">Home</a> / <a href="/admin">Admin</a> / <a href="/admin/events">Events</a> / <%= submitLabel %></p>
+    <h1><%= submitLabel %></h1>
+  </div>
+</section>
+
+<section class="section bg-grey">
+  <div class="container form-narrow">
+    <div class="card form-card">
+      <% if (typeof errors !== 'undefined' && Object.keys(errors).length > 0) { %>
+        <div class="flash flash-error">
+          <strong>Please fix the following:</strong>
+          <ul>
+            <% for (const msg of Object.values(errors)) { %>
+              <li><%= msg %></li>
+            <% } %>
+          </ul>
+        </div>
+      <% } %>
+
+      <form method="post" action="<%= action %>" data-validate novalidate>
+        <div class="form-row two">
+          <div class="field">
+            <label for="code">Event code <span class="req">*</span></label>
+            <input type="text" id="code" name="code" value="<%= typeof form.code !== 'undefined' ? form.code : '' %>"
+                   placeholder="e.g. FOUND2026" data-rule="code">
+            <span class="field-error" data-error-for="code"><%= errors.code || '' %></span>
+          </div>
+          <div class="field">
+            <label for="title">Event title <span class="req">*</span></label>
+            <input type="text" id="title" name="title" value="<%= typeof form.title !== 'undefined' ? form.title : '' %>"
+                   placeholder="e.g. DCT Tech Summit 2026" data-rule="title">
+            <span class="field-error" data-error-for="title"><%= errors.title || '' %></span>
+          </div>
+        </div>
+
+        <div class="form-row">
+          <div class="field">
+            <label for="description">Description <span class="req">*</span></label>
+            <textarea id="description" name="description" rows="4" data-rule="required"
+                      placeholder="What is this event about?"><%= typeof form.description !== 'undefined' ? form.description : '' %></textarea>
+            <span class="field-error" data-error-for="description"><%= errors.description || '' %></span>
+          </div>
+        </div>
+
+        <div class="form-row two">
+          <div class="field">
+            <label for="venue">Venue <span class="req">*</span></label>
+            <input type="text" id="venue" name="venue" value="<%= typeof form.venue !== 'undefined' ? form.venue : '' %>"
+                   placeholder="e.g. DCT Quadrangle" data-rule="required">
+            <span class="field-error" data-error-for="venue"><%= errors.venue || '' %></span>
+          </div>
+          <div class="field">
+            <label for="capacity">Capacity <span class="req">*</span></label>
+            <input type="number" id="capacity" name="capacity" min="1" value="<%= typeof form.capacity !== 'undefined' ? form.capacity : '' %>"
+                   placeholder="e.g. 200" data-rule="capacity">
+            <span class="field-error" data-error-for="capacity"><%= errors.capacity || '' %></span>
+          </div>
+        </div>
+
+        <div class="form-row three">
+          <div class="field">
+            <label for="date">Date <span class="req">*</span></label>
+            <input type="date" id="date" name="date" value="<%= typeof form.date !== 'undefined' ? form.date : '' %>" data-rule="date">
+            <span class="field-error" data-error-for="date"><%= errors.date || '' %></span>
+          </div>
+          <div class="field">
+            <label for="timeStart">Starts at <span class="req">*</span></label>
+            <input type="time" id="timeStart" name="timeStart" value="<%= typeof form.timeStart !== 'undefined' ? form.timeStart : '' %>" data-rule="time">
+            <span class="field-error" data-error-for="timeStart"><%= errors.timeStart || '' %></span>
+          </div>
+          <div class="field">
+            <label for="timeEnd">Ends at <span class="req">*</span></label>
+            <input type="time" id="timeEnd" name="timeEnd" value="<%= typeof form.timeEnd !== 'undefined' ? form.timeEnd : '' %>" data-rule="time">
+            <span class="field-error" data-error-for="timeEnd"><%= errors.timeEnd || '' %></span>
+          </div>
+        </div>
+
+        <div class="form-row two">
+          <div class="field">
+            <label for="organizer">Organizer</label>
+            <input type="text" id="organizer" name="organizer"
+                   value="<%= typeof form.organizer !== 'undefined' ? form.organizer : 'Office of Student Affairs and Services' %>">
+          </div>
+          <div class="field">
+            <label for="contactEmail">Contact email</label>
+            <input type="email" id="contactEmail" name="contactEmail" data-rule="email"
+                   value="<%= typeof form.contactEmail !== 'undefined' ? form.contactEmail : 'osas@dct.edu.ph' %>">
+            <span class="field-error" data-error-for="contactEmail"></span>
+          </div>
+        </div>
+
+        <label class="check-label">
+          <input type="checkbox" name="registrationOpen" value="true"
+                 <%= typeof form.registrationOpen === 'undefined' || form.registrationOpen === true || form.registrationOpen === 'true' ? 'checked' : '' %>>
+          <span>Registration is open to the public</span>
+        </label>
+
+        <div class="form-actions">
+          <button type="submit" class="btn-main"><%= submitLabel %></button>
+          <a class="btn-outline" href="/admin/events">Cancel</a>
+        </div>
+      </form>
+    </div>
+  </div>
+</section>

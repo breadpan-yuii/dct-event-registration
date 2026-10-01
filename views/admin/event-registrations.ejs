@@ -1,0 +1,74 @@
+<section class="page-intro admin-intro">
+  <div class="container">
+    <div class="intro-flex">
+      <div>
+        <p class="crumbs"><a href="/">Home</a> / <a href="/admin">Admin</a> / <a href="/admin/events">Events</a> / Registrations</p>
+        <h1><%= event.title %></h1>
+        <p><%= fmtLongDate(event.date) %> &middot; <%= event.venue %> &middot; <strong><%= confirmed %></strong> confirmed</p>
+      </div>
+      <div class="intro-actions">
+        <a class="btn-main" href="/admin/events/<%= event.id %>/registrations?export=csv">&#11015; Export CSV</a>
+        <a class="btn-outline" href="/admin/events">Back to events</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section">
+  <div class="container">
+    <div class="card table-card">
+      <div class="table-scroll">
+        <table class="data-table">
+          <thead>
+            <tr>
+              <th>Reference</th>
+              <th>Name</th>
+              <th>Email</th>
+              <th>Mobile</th>
+              <th>Department</th>
+              <th>Year</th>
+              <th>Status</th>
+              <th class="col-actions">Actions</th>
+            </tr>
+          </thead>
+          <tbody>
+            <% if (rows.length) { %>
+              <% for (const r of rows) { %>
+                <tr class="<%= r.status === 'cancelled' ? 'row-muted' : '' %>">
+                  <td><code><a href="/registrations/<%= r.reference %>"><%= r.reference %></a></code></td>
+                  <td><%= r.fullName %></td>
+                  <td><%= r.email %></td>
+                  <td><%= r.phone %></td>
+                  <td><%= r.department %></td>
+                  <td><%= r.yearLevel %></td>
+                  <td>
+                    <% if (r.status === 'confirmed') { %>
+                      <span class="badge badge-open">Confirmed</span>
+                    <% } else { %>
+                      <span class="badge badge-closed">Cancelled</span>
+                    <% } %>
+                  </td>
+                  <td class="row-actions">
+                    <a class="btn-outline btn-xs" href="/registrations/<%= r.reference %>">View</a>
+                    <% if (r.status === 'confirmed') { %>
+                      <form method="post" action="/admin/registrations/<%= r.id %>/cancel" class="inline-form"
+                            onsubmit="return confirm('Cancel registration <%= r.reference %>?');">
+                        <button type="submit" class="btn-outline btn-xs">Cancel</button>
+                      </form>
+                    <% } %>
+                    <form method="post" action="/admin/registrations/<%= r.id %>/delete" class="inline-form"
+                          onsubmit="return confirm('Permanently delete <%= r.reference %>?');">
+                      <button type="submit" class="btn-danger btn-xs">Delete</button>
+                    </form>
+                  </td>
+                </tr>
+              <% } %>
+            <% } else { %>
+              <tr><td colspan="8" class="empty-td">No registrations for this event yet.</td></tr>
+            <% } %>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</section>

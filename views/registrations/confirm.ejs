@@ -1,0 +1,63 @@
+<section class="page-intro">
+  <div class="container">
+    <p class="crumbs"><a href="/">Home</a> / Registration Confirmation</p>
+    <h1>Your Registration</h1>
+  </div>
+</section>
+
+<section class="section bg-grey">
+  <div class="container receipt-narrow">
+    <div class="card receipt">
+      <div class="receipt-head">
+        <img class="receipt-icon" src="/assets/img/icon.png" alt="DCT seal">
+        <div>
+          <h2 class="receipt-title">Registration Confirmed</h2>
+          <p class="receipt-school"><%= school.name %></p>
+        </div>
+      </div>
+
+      <div class="receipt-ref">
+        <span class="receipt-label">Reference number</span>
+        <span class="receipt-code"><%= reg.reference %></span>
+      </div>
+
+      <div class="receipt-body">
+        <div class="receipt-event">
+          <h3><%= reg.event.title %></h3>
+          <p>&#128197; <%= fmtLongDate(reg.event.date) %> &middot; &#9200; <%= fmtTime(reg.event.timeStart) %> &ndash; <%= fmtTime(reg.event.timeEnd) %></p>
+          <p>&#128205; <%= reg.event.venue %></p>
+        </div>
+
+        <dl class="meta-list receipt-details">
+          <div class="meta-item"><dt>Full name</dt><dd><%= reg.fullName %></dd></div>
+          <div class="meta-item"><dt>Email</dt><dd><%= reg.email %></dd></div>
+          <div class="meta-item"><dt>Mobile</dt><dd><%= reg.phone %></dd></div>
+          <div class="meta-item"><dt>Student ID</dt><dd><%= reg.studentId || '&mdash;' %></dd></div>
+          <div class="meta-item"><dt>Department</dt><dd><%= reg.department %></dd></div>
+          <div class="meta-item"><dt>Year level</dt><dd><%= reg.yearLevel %></dd></div>
+          <% if (reg.notes) { %>
+            <div class="meta-item"><dt>Notes</dt><dd><%= reg.notes %></dd></div>
+          <% } %>
+        </dl>
+      </div>
+
+      <div class="receipt-foot">
+        <% if (reg.status === 'confirmed') { %>
+          <span class="badge badge-open">&#10003; Confirmed on <%= fmtDateTime(reg.createdAt) %></span>
+        <% } else { %>
+          <span class="badge badge-closed">&#10007; Cancelled</span>
+        <% } %>
+      </div>
+
+      <div class="receipt-actions">
+        <button type="button" class="btn-outline" onclick="window.print()">&#128424; Print / Save PDF</button>
+        <% if (reg.status === 'confirmed') { %>
+          <form method="post" action="/registrations/<%= reg.reference %>/cancel"
+                onsubmit="return confirm('Cancel this registration? This cannot be undone.');">
+            <button type="submit" class="btn-danger">Cancel Registration</button>
+          </form>
+        <% } %>
+      </div>
+    </div>
+  </div>
+</section>

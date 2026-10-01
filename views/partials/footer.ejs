@@ -1,0 +1,37 @@
+<footer class="site-footer">
+  <div class="container">
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <img class="footer-logo" src="/assets/img/logo.png" alt="<%= school.shortName %> logo">
+        <p class="footer-motto"><%= school.motto %> — <em><%= school.mottoEnglish %></em></p>
+        <p class="footer-tagline">Where faith, knowledge, and community meet.</p>
+      </div>
+
+      <div class="footer-col">
+        <h4>About the College</h4>
+        <p class="footer-text"><%= school.vision %></p>
+      </div>
+
+      <div class="footer-col">
+        <h4>Quick Links</h4>
+        <ul class="footer-links">
+          <li><a href="/events">Upcoming events</a></li>
+          <li><a href="/registrations/lookup">Find my registration</a></li>
+          <li><a href="/admin">Administrator</a></li>
+          <li><a href="<%= school.website %>" target="_blank" rel="noopener">dct.edu.ph</a></li>
+        </ul>
+      </div>
+
+      <div class="footer-col">
+        <h4>Visit Us</h4>
+        <p class="footer-text"><%= school.address %></p>
+        <p class="footer-text"><a href="<%= school.website %>" target="_blank" rel="noopener"><%= school.website %></a></p>
+      </div>
+    </div>
+
+    <div class="footer-bottom">
+      <p>Copyright © <%= new Date().getFullYear() %> — <%= school.name %>. All Rights Reserved.</p>
+      <p>Designed and Developed by: DCT - MIS Department</p>
+    </div>
+  </div>
+</footer>

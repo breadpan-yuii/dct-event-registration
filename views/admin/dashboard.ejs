@@ -1,0 +1,134 @@
+<section class="page-intro admin-intro">
+  <div class="container">
+    <div class="intro-flex">
+      <div>
+        <p class="crumbs"><a href="/">Home</a> / <a href="/admin">Admin</a> / Dashboard</p>
+        <h1>Admin Dashboard</h1>
+        <p>Overview of events and registrations at a glance.</p>
+      </div>
+      <div class="intro-actions">
+        <a class="btn-main" href="/admin/events/new">+ New Event</a>
+        <form method="post" action="/admin/logout" class="inline-form">
+          <button type="submit" class="btn-outline btn-sm">Sign out</button>
+        </form>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section">
+  <div class="container">
+    <div class="stat-grid">
+      <div class="card stat-card">
+        <span class="stat-value"><%= totals.events %></span>
+        <span class="stat-label">Total events</span>
+      </div>
+      <div class="card stat-card">
+        <span class="stat-value"><%= totals.upcoming %></span>
+        <span class="stat-label">Upcoming</span>
+      </div>
+      <div class="card stat-card">
+        <span class="stat-value"><%= totals.registrations %></span>
+        <span class="stat-label">Confirmed registrations</span>
+      </div>
+      <div class="card stat-card">
+        <span class="stat-value"><%= totals.cancelled %></span>
+        <span class="stat-label">Cancelled</span>
+      </div>
+    </div>
+
+    <div class="section-header">
+      <h2 class="title">Event capacity</h2>
+      <a href="/admin/events">Manage events &rarr;</a>
+    </div>
+
+    <div class="card table-card">
+      <div class="table-scroll">
+        <table class="data-table">
+          <thead>
+            <tr>
+              <th>Event</th>
+              <th>Date</th>
+              <th>Confirmed</th>
+              <th class="col-grow">Capacity</th>
+              <th>Status</th>
+              <th></th>
+            </tr>
+          </thead>
+          <tbody>
+            <% for (const ev of rows) { %>
+              <tr>
+                <td>
+                  <strong><%= ev.title %></strong><br>
+                  <code><%= ev.code %></code>
+                </td>
+                <td><%= fmtLongDate(ev.date) %></td>
+                <td><%= ev.registrations %></td>
+                <td class="col-grow">
+                  <div class="progress"><div class="progress-fill" style="width: <%= ev.fill %>%"></div></div>
+                  <span class="seat-caption"><%= ev.fill %>% full</span>
+                </td>
+                <td>
+                  <% if (ev.past) { %>
+                    <span class="badge badge-closed">Completed</span>
+                  <% } else if (ev.open) { %>
+                    <span class="badge badge-open">Open</span>
+                  <% } else { %>
+                    <span class="badge badge-full">Full / closed</span>
+                  <% } %>
+                </td>
+                <td class="row-actions">
+                  <a class="btn-outline btn-xs" href="/admin/events/<%= ev.id %>/registrations">Registrations</a>
+                </td>
+              </tr>
+            <% } %>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <div class="section-header">
+      <h2 class="title">Recent registrations</h2>
+      <a href="/admin/events">All events &rarr;</a>
+    </div>
+
+    <div class="card table-card">
+      <div class="table-scroll">
+        <table class="data-table">
+          <thead>
+            <tr>
+              <th>Reference</th>
+              <th>Name</th>
+              <th>Event</th>
+              <th>Department</th>
+              <th>Status</th>
+              <th>Registered on</th>
+            </tr>
+          </thead>
+          <tbody>
+            <% if (recent.length) { %>
+              <% for (const r of recent) { %>
+                <tr>
+                  <td><code><a href="/registrations/<%= r.reference %>"><%= r.reference %></a></code></td>
+                  <td><%= r.fullName %></td>
+                  <td><%= r.eventTitle %></td>
+                  <td><%= r.department %></td>
+                  <td>
+                    <% if (r.status === 'confirmed') { %>
+                      <span class="badge badge-open">Confirmed</span>
+                    <% } else { %>
+                      <span class="badge badge-closed">Cancelled</span>
+                    <% } %>
+                  </td>
+                  <td><%= fmtDateTime(r.createdAt) %></td>
+                </tr>
+              <% } %>
+            <% } else { %>
+              <tr><td colspan="6" class="empty-td">No registrations yet.</td></tr>
+            <% } %>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</section>

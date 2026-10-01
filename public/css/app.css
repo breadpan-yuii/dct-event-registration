@@ -1,0 +1,30 @@
+/* ==========================================================================
+   app.css — page-specific layout extras on top of the DCT theme.
+   ========================================================================== */
+
+/* Event grid niceties on very large screens */
+@media (min-width: 1200px) {
+  .event-grid { grid-template-columns: repeat(3, 1fr); }
+}
+
+/* Register page two-column form layout */
+.register-grid { display: grid; grid-template-columns: 1.55fr 1fr; gap: 26px; align-items: start; }
+@media (max-width: 960px) {
+  .register-grid { grid-template-columns: 1fr; }
+}
+
+/* Small helper text */
+.optional { font-weight: 400; color: var(--grey-text); }
+
+/* Keep cards from stretching oddly inside narrow columns */
+.form-card .form-actions .btn-main { flex-shrink: 1; }
+
+/* Auth card */
+.auth-card { text-align: center; }
+.auth-seal { width: 74px; height: 74px; border-radius: 50%; margin-bottom: 12px; }
+.auth-sub { font-size: 0.92rem; margin-bottom: 18px; }
+
+/* Data table action row alignment on small screens */
+@media (max-width: 680px) {
+  .data-table .row-actions { flex-direction: column; align-items: flex-start; }
+}

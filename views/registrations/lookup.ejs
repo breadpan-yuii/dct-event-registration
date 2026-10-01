@@ -1,0 +1,62 @@
+<section class="page-intro">
+  <div class="container">
+    <p class="crumbs"><a href="/">Home</a> / My Registration</p>
+    <h1>Find My Registration</h1>
+    <p>Check your slots, view your reference number, or cancel a booking.</p>
+  </div>
+</section>
+
+<section class="section bg-grey">
+  <div class="container lookup-narrow">
+    <div class="card form-card">
+      <% if (typeof errors !== 'undefined' && errors.general) { %>
+        <div class="flash flash-error"><%= errors.general %></div>
+      <% } %>
+
+      <form method="post" action="/registrations/lookup" class="lookup-form">
+        <div class="form-row">
+          <div class="field">
+            <label for="email">Email address</label>
+            <input type="email" id="email" name="email" value="<%= typeof form.email !== 'undefined' ? form.email : '' %>"
+                   placeholder="you@dct.edu.ph">
+          </div>
+        </div>
+        <div class="form-row">
+          <div class="field">
+            <label for="reference">Reference number <span class="optional">(optional, speeds things up)</span></label>
+            <input type="text" id="reference" name="reference" value="<%= typeof form.reference !== 'undefined' ? form.reference : '' %>"
+                   placeholder="e.g. DCT-UGNAYAN-0001">
+          </div>
+        </div>
+        <div class="form-actions">
+          <button type="submit" class="btn-main">Search</button>
+        </div>
+      </form>
+    </div>
+
+    <% if (searched) { %>
+      <% if (results && results.length) { %>
+        <h3 class="lookup-heading"><%= results.length %> registration(s) found</h3>
+        <div class="lookup-results">
+          <% for (const r of results) { %>
+            <div class="card lookup-item">
+              <div class="lookup-item-main">
+                <h4><a href="/registrations/<%= r.reference %>"><%= r.event.title %></a></h4>
+                <p>&#128197; <%= fmtLongDate(r.event.date) %> &middot; <a href="/registrations/<%= r.reference %>"><code><%= r.reference %></code></a></p>
+              </div>
+              <% if (r.status === 'confirmed') { %>
+                <span class="badge badge-open">Confirmed</span>
+              <% } else { %>
+                <span class="badge badge-closed">Cancelled</span>
+              <% } %>
+            </div>
+          <% } %>
+        </div>
+      <% } else { %>
+        <div class="card empty-state">
+          <p>No registrations match your search. Double-check your email address, or contact the organizer if you believe this is a mistake.</p>
+        </div>
+      <% } %>
+    <% } %>
+  </div>
+</section>

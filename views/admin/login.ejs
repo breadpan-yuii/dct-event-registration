@@ -1,0 +1,27 @@
+<section class="section">
+  <div class="container auth-narrow">
+    <div class="card form-card auth-card">
+      <img class="auth-seal" src="/assets/img/icon.png" alt="DCT seal">
+      <h1>Administrator Login</h1>
+      <p class="auth-sub">Restricted area — event management for <strong><%= school.shortName %></strong>.</p>
+
+      <% if (typeof error !== 'undefined' && error) { %>
+        <div class="flash flash-error"><%= error %></div>
+      <% } %>
+
+      <form method="post" action="/admin/login">
+        <div class="form-row">
+          <div class="field">
+            <label for="passcode">Administration passcode</label>
+            <input type="password" id="passcode" name="passcode" required autofocus autocomplete="current-password">
+          </div>
+        </div>
+        <div class="form-actions">
+          <button type="submit" class="btn-main btn-block">Sign in</button>
+        </div>
+      </form>
+
+      <p class="aside-note">Demo passcode: <code>dct@2026</code> (configurable via <code>DCT_ADMIN_PASSCODE</code>)</p>
+    </div>
+  </div>
+</section>

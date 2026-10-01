@@ -1,0 +1,38 @@
+<article class="event-card">
+  <div class="event-card-top">
+    <div class="date-chip">
+      <span class="date-month"><%= fmtMonthDay(event.date).split(' ')[0] %></span>
+      <span class="date-day"><%= fmtMonthDay(event.date).split(' ')[1] %></span>
+    </div>
+    <div class="event-card-title">
+      <h3><a href="/events/<%= event.slug %>"><%= event.title %></a></h3>
+      <p class="event-meta">
+        <span>&#128197; <%= fmtLongDate(event.date) %></span>
+        <span>&#9200; <%= fmtTime(event.timeStart) %></span>
+        <span>&#128205; <%= event.venue %></span>
+      </p>
+    </div>
+  </div>
+
+  <div class="event-card-bottom">
+    <div class="seat-line">
+      <div class="progress"><div class="progress-fill" style="width: <%= event.fill %>%"></div></div>
+      <span class="seat-caption" title="<%= event.registrations %> registered · <%= event.seatsLeft %> seats left of <%= event.capacity %>">
+        <%= event.registrations %>/<%= event.capacity %>
+      </span>
+    </div>
+    <div class="event-card-actions">
+      <% if (typeof event.past === 'undefined' || !event.past) { %>
+        <% if (event.open) { %>
+          <span class="badge badge-open">Open</span>
+          <a class="btn-main btn-sm" href="/events/<%= event.slug %>/register">Register</a>
+        <% } else { %>
+          <span class="badge badge-full">Full</span>
+        <% } %>
+      <% } else { %>
+        <span class="badge badge-closed">Completed</span>
+      <% } %>
+      <a class="btn-outline btn-sm" href="/events/<%= event.slug %>">Details</a>
+    </div>
+  </div>
+</article>

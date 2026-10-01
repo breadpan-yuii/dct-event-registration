@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <%- include('partials/head') %>
+</head>
+<body class="<%= typeof navClass !== 'undefined' && navClass === 'nav-transparent' ? 'page-home' : '' %>">
+  <%- include('partials/header') %>
+  <%- include('partials/flash') %>
+
+  <main id="main">
+    <%- include(body) %>
+  </main>
+
+  <%- include('partials/footer') %>
+  <%- include('partials/scripts') %>
+</body>
+</html>

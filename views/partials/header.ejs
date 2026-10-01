@@ -1,0 +1,24 @@
+<header class="site-header <%= typeof navClass !== 'undefined' && navClass === 'nav-transparent' ? 'nav-transparent' : '' %>">
+  <nav class="navbar" aria-label="Primary">
+    <div class="container nav-inner">
+      <div class="navbar-brand">
+        <a href="/" title="<%= school.name %> — Home">
+          <!-- logo: white wordmark for dark surfaces / logo-alt: colored for light surfaces -->
+          <img class="brand-logo" src="/assets/img/logo.png" alt="<%= school.shortName %> logo (light)">
+          <img class="brand-logo-alt" src="/assets/img/logo-alt.png" alt="<%= school.shortName %> logo (color)">
+        </a>
+      </div>
+
+      <button class="nav-toggle" id="navToggle" aria-label="Toggle navigation" aria-expanded="false">
+        <span></span><span></span><span></span>
+      </button>
+
+      <ul class="main-nav" id="mainNav">
+        <li class="<%= (typeof activeNav !== 'undefined' && activeNav === 'home') ? 'active' : '' %>"><a href="/">Home</a></li>
+        <li class="<%= (typeof activeNav !== 'undefined' && activeNav === 'events') ? 'active' : '' %>"><a href="/events">Events</a></li>
+        <li class="<%= (typeof activeNav !== 'undefined' && activeNav === 'lookup') ? 'active' : '' %>"><a href="/registrations/lookup">My Registration</a></li>
+        <li class="<%= (typeof activeNav !== 'undefined' && activeNav === 'admin') ? 'active' : '' %>"><a class="nav-admin" href="/admin">Admin</a></li>
+      </ul>
+    </div>
+  </nav>
+</header>

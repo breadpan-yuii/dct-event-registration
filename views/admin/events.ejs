@@ -1,0 +1,71 @@
+<section class="page-intro admin-intro">
+  <div class="container">
+    <div class="intro-flex">
+      <div>
+        <p class="crumbs"><a href="/">Home</a> / <a href="/admin">Admin</a> / Events</p>
+        <h1>Manage Events</h1>
+      </div>
+      <div class="intro-actions">
+        <a class="btn-main" href="/admin/events/new">+ New Event</a>
+        <a class="btn-outline" href="/admin">Dashboard</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section">
+  <div class="container">
+    <div class="card table-card">
+      <div class="table-scroll">
+        <table class="data-table">
+          <thead>
+            <tr>
+              <th>Code</th>
+              <th>Event</th>
+              <th>Date</th>
+              <th>Capacity</th>
+              <th>Confirmed</th>
+              <th>Cancelled</th>
+              <th>Status</th>
+              <th class="col-actions">Actions</th>
+            </tr>
+          </thead>
+          <tbody>
+            <% if (rows.length) { %>
+              <% for (const ev of rows) { %>
+                <tr>
+                  <td><code><%= ev.code %></code></td>
+                  <td><strong><%= ev.title %></strong></td>
+                  <td><%= fmtLongDate(ev.date) %></td>
+                  <td><%= ev.capacity %></td>
+                  <td><%= ev.registrations %></td>
+                  <td><%= ev.cancelled %></td>
+                  <td>
+                    <% if (ev.past) { %>
+                      <span class="badge badge-closed">Completed</span>
+                    <% } else if (ev.open) { %>
+                      <span class="badge badge-open">Open</span>
+                    <% } else { %>
+                      <span class="badge badge-full">Closed</span>
+                    <% } %>
+                  </td>
+                  <td class="row-actions">
+                    <a class="btn-outline btn-xs" href="/events/<%= ev.slug %>">View</a>
+                    <a class="btn-outline btn-xs" href="/admin/events/<%= ev.id %>/registrations">Registrations</a>
+                    <a class="btn-outline btn-xs" href="/admin/events/<%= ev.id %>/edit">Edit</a>
+                    <form method="post" action="/admin/events/<%= ev.id %>/delete" class="inline-form"
+                          onsubmit="return confirm('Delete &ldquo;<%= ev.title %>&rdquo;? This only works when the event has no registrations.');">
+                      <button type="submit" class="btn-danger btn-xs">Delete</button>
+                    </form>
+                  </td>
+                </tr>
+              <% } %>
+            <% } else { %>
+              <tr><td colspan="8" class="empty-td">No events yet — create your first one!</td></tr>
+            <% } %>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</section>
